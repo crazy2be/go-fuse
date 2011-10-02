@@ -225,6 +225,21 @@ func TestMkdirRmdir(t *testing.T) {
 	CheckSuccess(err)
 }
 
+
+func TestLinkMountCreate(t *testing.T) {
+	me := NewTestCase(t)
+	defer me.Cleanup()
+
+	err := ioutil.WriteFile(me.orig + "/a", []byte(contents), 0644)
+	CheckSuccess(err)
+
+	_, err = os.Lstat(me.mnt + "/b")
+	CheckSuccess(err)
+	
+	err = os.Link(me.mnt+"/a", me.mnt+"/b")
+	CheckSuccess(err)
+}
+
 func TestLinkCreate(t *testing.T) {
 	me := NewTestCase(t)
 	defer me.Cleanup()
